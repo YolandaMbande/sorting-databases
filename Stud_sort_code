@@ -1,0 +1,75 @@
+PL\SQL code:
+
+creating a table using a use case:
+
+
+DECLARE 
+v_grade varchar2(5);
+v_mark NUMBER(3) :=&mark;
+
+BEGIN
+
+v_grade :=
+CASE
+WHEN v_mark >= 90 THEN 'A'
+WHEN v_mark >= 80 THEN 'B'
+WHEN v_mark >= 70 THEN 'C'
+WHEN v_mark >= 60 THEN 'D'
+WHEN v_mark >= 50 THEN 'E'
+ELSE 'Fail'
+END;
+
+DBMS_OUTPUT.PUT_LINE('Your percentage mark is '||v_mark||' therefore your result is '|| v_grade);
+END;
+
+DECLARE
+
+v_hours NUMBER(7,2):= &hours;
+v_rate NUMBER(7,2) :=&rate;
+v_taxRate NUMBER(7,2) :=0.28;
+v_gross NUMBER(7,2);
+v_tax NUMBER(7,2);
+v_pay NUMBER(7,2);
+v_sal NUMBER(7,2);
+
+BEGIN
+
+v_gross := v_hours * v_rate;
+v_tax := v_gross * v_taxRate;
+v_pay := v_gross - v_tax;
+v_sal := v_gross * 12;
+
+DBMS_OUTPUT.PUT_LINE('Gross: '||TO_CHAR(v_gross,'fmL99,999.99')||' Tax: '||TO_CHAR(v_tax,'fmL99,999.99') ||' Net pay: '|| TO_CHAR(v_pay,'fmL99,999.99') ||' Annual Salary: '|| TO_CHAR(v_sal,'fmL99,999.99'));
+
+END;
+
+BEGIN
+
+INSERT INTO S_STUDENT
+VALUES(98004556, 'LEROKE', 'GD', 'M', sysdate);
+
+DBMS_OUTPUT.PUT_LINE('1 Record(s) Succesfully Added!');
+
+END;
+
+<!---- CREATE AN ANONYMOUS BLOCK THAT ALLOWS THE USER TO CHANGE A STUDENT'S INITIALS
+ FROM "GD" TO "GO". ---->
+
+BEGIN
+
+UPDATE s_student
+SET initials = 'GO'
+WHERE studnr = '98004556';
+
+DBMS_OUTPUT.PUT_LINE('1 Record(s) Successfully Modified' );
+
+END;
+
+BEGIN
+
+DELETE FROM s_student
+WHERE  studnr = '98004556';
+DBMS_OUTPUT.PUT_LINE(SQL%ROWCOUNT||' Record(s)Successfully Removed.'); 
+
+END;
+/
